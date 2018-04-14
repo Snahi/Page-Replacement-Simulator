@@ -29,7 +29,6 @@ public class Main extends Application {
 	private TextArea out;
 	private Button start;
 	private TextField ramSize;
-	private TextField vmSize;
 	
 	
 	@Override
@@ -44,33 +43,33 @@ public class Main extends Application {
 			start = new Button("Start");
 			start.setOnAction(e -> {
 				
-				out.appendText("RAM: " + ramSize.getText() + "\nVirtual Memory: " + vmSize.getText());
+				out.appendText("RAM: " + ramSize.getText());
 				RAM ram = new RAM(Integer.parseInt(ramSize.getText()));
-				VirtualMemory vm = new VirtualMemory(Integer.parseInt(vmSize.getText()));
+				VirtualMemory vm = new VirtualMemory(5000);
 				CPU cpu = new CPU(new OPT(ram, vm), ram, vm);
 				cpu.run();
 				out.appendText("\n\nOPT:                         " + cpu.getMmu().getPageFaults());
 				
 				ram = new RAM(Integer.parseInt(ramSize.getText()));
-				vm = new VirtualMemory(Integer.parseInt(vmSize.getText()));
+				vm = new VirtualMemory(5000);
 				cpu = new CPU(new LRU(ram, vm), ram, vm);
 				cpu.run();
 				out.appendText("\nLRU:                         " + cpu.getMmu().getPageFaults());
 				
 				ram = new RAM(Integer.parseInt(ramSize.getText()));
-				vm = new VirtualMemory(Integer.parseInt(vmSize.getText()));
+				vm = new VirtualMemory(5000);
 				cpu = new CPU(new A_LRU(ram, vm), ram, vm);
 				cpu.run();
 				out.appendText("\nApproximated LRU: " + cpu.getMmu().getPageFaults());
 				
 				ram = new RAM(Integer.parseInt(ramSize.getText()));
-				vm = new VirtualMemory(Integer.parseInt(vmSize.getText()));
+				vm = new VirtualMemory(5000);
 				cpu = new CPU(new FIFO(ram, vm), ram, vm);
 				cpu.run();
 				out.appendText("\nFIFO:                        " + cpu.getMmu().getPageFaults());
 				
 				ram = new RAM(Integer.parseInt(ramSize.getText()));
-				vm = new VirtualMemory(Integer.parseInt(vmSize.getText()));
+				vm = new VirtualMemory(5000);
 				cpu = new CPU(new RAND(ram, vm), ram, vm);
 				cpu.run();
 				out.appendText("\nRAND:                      " + cpu.getMmu().getPageFaults() + "\n\n\n\n\n");
@@ -81,10 +80,14 @@ public class Main extends Application {
 			Label ramLabel = new Label("RAM size:");
 			ramSize = new TextField("10");
 			
-			Label vmLabel = new Label("Virutal memory size:");
-			vmSize = new TextField("5000");
 			
-			menu.getChildren().addAll(start, separator, ramLabel, ramSize, vmLabel, vmSize);
+			Button generate = new Button("New data");
+			generate.setOnAction(e -> {
+				DataGenerator dg = new DataGenerator();
+				dg.generate();
+			});
+			
+			menu.getChildren().addAll(start, generate, separator, ramLabel, ramSize);
 			root.setLeft(menu);
 			
 			
