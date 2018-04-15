@@ -17,14 +17,22 @@ public class DataGenerator {
 			for (int i = 0; i < 100; i++) {
 				currentCenter = (int) (Math.random() * 50);
 				
-				for (int j = 0; j < 50; j++) {
-					nextPage = (int) (Math.random() * 17);
+				for (int j = 0; j < 15; j++) {
+					nextPage = (int) (Math.random() * 2 + currentCenter);
+					writer.println(nextPage);
+					writer.println(5);
+				}
+				
+				for (int j = 0; j < 5; j++) {
+					nextPage = (int) (Math.random() * 50);
 					writer.println(nextPage);
 				}
 				
-				for (int k = 0; k < 5; k++) {
-					nextPage = (int) (Math.random() * 50);
+				
+				for (int k = 0; k < 15; k++) {
+					nextPage = (int) (Math.random() * 5 + currentCenter);
 					writer.println(nextPage);
+					writer.println(5);
 				}
 			}
 		} catch (IOException e) {
